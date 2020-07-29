@@ -65,10 +65,22 @@ def pc_jwt_get(config):
 def api_policy_list_get(params):
     action = "GET"
     url = "https://" + config['apiBase'] + "/policy"
-    return pc_call_api(action, url, config,params=params)
+    return pc_call_api(action, url, config, params=params)
 
+def api_search_get(param):
+    action = "GET"
+    url = "https://" + config['apiBase'] + "/search/history/"+param
+    return pc_call_api(action, url, config)
 
+def api_policy_add(params):
+    action = "POST"
+    url = "https://" + config['apiBase'] + "/policy"
+    return pc_call_api(action, url, config, data=params)
 
+def api_policy_update(policyid,params):
+    action = "PUT"
+    url = "https://" + config['apiBase'] + "/policy/"+policyid
+    return pc_call_api(action, url, config,data=params)
 config=json.load(open('settings.conf','r'))
 config['apiBase']='api'+config['apiBase'][3:]
 pc_jwt_get(config)

@@ -23,9 +23,17 @@ else:
     origin=repo.remote('origin')
     print('Remote already exists, skipping')
 
+print('Getting saved search information.')
 for policy in policies:
+    
+    if 'savedSearch' in policy['rule']['parameters']:
+        if policy['rule']['parameters']['savedSearch']=='true':
+            searchId=policy['rule']['criteria']
+            if type(searchId)==str:
+                searchData=pc_lib.api_search_get(searchId)['data']
+                policy['searchData']=searchData
     json.dump(policy,open(cfg['repoPath']+policy['policyId']+'.json','w'),indent=3)
-
+            
 repo.git.add(A=True)
 date_str = datetime.now().strftime("%b-%d-%Y %H:%M:%S")    
 try:
